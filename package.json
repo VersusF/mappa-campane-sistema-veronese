@@ -1,16 +1,30 @@
 {
-    "files": [
-        "src/"
-    ],
-    "scripts": {
-        "start": "parcel serve src/index.html",
-        "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url .",
-        "deploy": "gh-pages -d dist"
-    },
-    "dependencies": {
-        "cross-env": "^5.2.0",
-        "gh-pages": "^1.2.0",
-        "parcel-bundler": "^1.9.7",
-        "typescript": "^2.9.2"
-    }
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "start": "parcel serve src/index.html",
+    "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url ."
+  },
+  "name": "mappa-campane-sistema-veronese",
+  "description": "Mappa dei campanili",
+  "version": "1.0.0",
+  "main": "src/index.html",
+  "devDependencies": {
+    "cross-env": "^5.2.1",
+    "parcel": "^2.0.0-nightly.476",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.30.0",
+    "typescript": "^2.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VersusF/mappa-campane-sistema-veronese.git"
+  },
+  "author": "Filippo Contro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VersusF/mappa-campane-sistema-veronese/issues"
+  },
+  "homepage": "https://github.com/VersusF/mappa-campane-sistema-veronese#readme"
 }
