@@ -2,7 +2,7 @@ deploy:
 	npm run-script build
 	cd dist
 	git add --all
-	git commit -m "Release at $(date)" 
+	git commit -m "New release `date`" 
 	git push
 	cd ..
 start:
