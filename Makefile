@@ -1,6 +1,10 @@
 deploy:
 	npm run-script build
-	git subtree push --prefix dist origin gh-page
+	cd dist
+	git add --all
+	git commit -m "Release at $(date)" 
+	git push
+	cd ..
 start:
 	npm run-script start
 
