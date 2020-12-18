@@ -3,14 +3,15 @@
     "src/"
   ],
   "scripts": {
-    "start": "parcel serve src/index.html",
-    "build": "cross-env NODE_ENV=production parcel build src/index.html --public-url ."
+    "start": "parcel serve src/index.html src/assets/",
+    "build": "cross-env NODE_ENV=production parcel build src/index.html src/assets/ --public-url ."
   },
   "name": "mappa-campane-sistema-veronese",
   "description": "Mappa dei campanili",
   "version": "1.0.0",
   "main": "src/index.html",
   "devDependencies": {
+    "@types/leaflet": "^1.5.19",
     "cross-env": "^5.2.1",
     "parcel": "^2.0.0-nightly.476",
     "parcel-bundler": "^1.12.4",
@@ -26,5 +27,9 @@
   "bugs": {
     "url": "https://github.com/VersusF/mappa-campane-sistema-veronese/issues"
   },
-  "homepage": "https://github.com/VersusF/mappa-campane-sistema-veronese#readme"
+  "homepage": "https://github.com/VersusF/mappa-campane-sistema-veronese#readme",
+  "dependencies": {
+    "fontsource-montserrat": "^3.1.5",
+    "leaflet": "^1.7.1"
+  }
 }
