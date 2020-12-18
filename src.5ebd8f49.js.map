@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.ts"],"names":[],"mappings":";AAAA,aAAA,OAAO,OAAS,WACZ,QAAQ,IAAI","file":"src.5ebd8f49.js","sourceRoot":"../src","sourcesContent":["window.onload = () => {\n    console.log(\"Hello world!\");\n}\n"]}
