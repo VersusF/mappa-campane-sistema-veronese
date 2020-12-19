@@ -34,28 +34,26 @@ function main() {
             return LF.divIcon({
                 html: c.getChildCount().toString(),
                 className: 'clusterIcon',
-                iconSize: [40, 35]
+                iconSize: [40, 40]
             })
         }
     });
 
     // Add data
-    const towers: Tower[] = require('./assets/torri2.min.json');
+    const towers: Tower[] = require('./assets/torri.json');
     addTowers(cluster, towers);
     map.addLayer(cluster);
 }
 
 interface Tower {
-    latitude: number,
-    longitude: number,
+    lat: number,
+    lng: number,
     id: number,
-    properties: {
-        nota: string,
-        numero: number,
-        peso: number,
-        suonabile: string,
-        titolo: string
-    }
+    nota: string,
+    numero: number,
+    peso: number | 'Sconosciuto',
+    suonabile: string,
+    titolo: string
 }
 
 function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
@@ -68,16 +66,13 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
     const markers: Marker[] = []
     towers.forEach(t => {
         const marker = LF.marker({
-            lat: t.latitude,
-            lng: t.longitude
+            lat: t.lat,
+            lng: t.lng
         }, {
-            title: t.properties.titolo,
+            title: t.titolo,
             icon: icon
         })
-        marker.on("click", () => {
-            console.log(t.properties.titolo);
-        });
-        marker.bindPopup(t.properties.titolo);
+        marker.bindPopup(t.titolo);
         markers.push(marker);
     });
     cluster.addLayers(markers);
