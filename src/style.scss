@@ -1,5 +1,7 @@
 @import '../node_modules/leaflet/dist/leaflet.css';
-@import "../node_modules/fontsource-montserrat/index.css";
+@import '../node_modules/leaflet.markercluster/dist/MarkerCluster.css';
+@import '../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css';
+@import '../node_modules/fontsource-montserrat/index.css';
 
 html, body {
     margin: 0;
@@ -19,4 +21,16 @@ h1 {
     width: 100%;
     text-align: center;
     font-family: "Montserrat";
+}
+
+.clusterIcon {
+    display: block;
+    background-image: url('./assets/bellIcon.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: center;
+    color: #ddd;
+    font-weight: bold;
+    padding-top: 1em;
 }

@@ -1,11 +1,16 @@
-import * as LF from "leaflet";
-const iconUrl = require("./assets/bellIcon.svg");
+import "leaflet";
+import { Marker, MarkerClusterGroup } from "leaflet";
+import "leaflet.markercluster";
+const LF = window['L'];
+const towerIconUrl = require("./assets/towerIcon.svg");
+const TOWER_WIDTH_PX = 24;
 
 window.onload = () => {
     main();
 }
 
 function main() {
+    // Init map
     const map = LF.map("map", {
         maxZoom: 19,
         minZoom: 8,
@@ -20,26 +25,24 @@ function main() {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }));
-
-    const towers: Tower[] = require('./assets/torri2.min.json');
-    console.log(`There are ${towers.length} towers in total`);
-    const icon = LF.icon({
-        iconUrl: iconUrl,
-        iconSize: [25, 25]
+    const cluster = LF.markerClusterGroup({
+        showCoverageOnHover: false,
+        disableClusteringAtZoom: 17,
+        spiderfyOnMaxZoom: false,
+        singleMarkerMode: false,
+        iconCreateFunction: (c) => {
+            return LF.divIcon({
+                html: c.getChildCount().toString(),
+                className: 'clusterIcon',
+                iconSize: [40, 35]
+            })
+        }
     });
-    towers.slice(0, 10).forEach(t => {
-        LF.marker({
-            lat: t.latitude,
-            lng: t.longitude
-        }, {
-            title: t.properties.titolo,
-            icon: icon
-        })
-        .on("click", () => {
-            console.log(t.properties.titolo);
-        })
-        .addTo(map);
-    })
+
+    // Add data
+    const towers: Tower[] = require('./assets/torri2.min.json');
+    addTowers(cluster, towers);
+    map.addLayer(cluster);
 }
 
 interface Tower {
@@ -53,4 +56,29 @@ interface Tower {
         suonabile: string,
         titolo: string
     }
+}
+
+function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
+    const icon = LF.icon({
+        iconUrl: towerIconUrl,
+        iconSize: [TOWER_WIDTH_PX, TOWER_WIDTH_PX * 4],
+        iconAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 4],
+        tooltipAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 2]
+    });
+    const markers: Marker[] = []
+    towers.forEach(t => {
+        const marker = LF.marker({
+            lat: t.latitude,
+            lng: t.longitude
+        }, {
+            title: t.properties.titolo,
+            icon: icon
+        })
+        marker.on("click", () => {
+            console.log(t.properties.titolo);
+        });
+        marker.bindPopup(t.properties.titolo);
+        markers.push(marker);
+    });
+    cluster.addLayers(markers);
 }
