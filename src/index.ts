@@ -3,6 +3,7 @@ import { Marker, MarkerClusterGroup } from "leaflet";
 import "leaflet.markercluster";
 const LF = window['L'];
 const towerIconUrl = require("./assets/towerIcon.svg");
+const towerShadowUrl = require("./assets/towerShadow.svg");
 const TOWER_WIDTH_PX = 24;
 
 window.onload = () => {
@@ -34,7 +35,7 @@ function main() {
             return LF.divIcon({
                 html: c.getChildCount().toString(),
                 className: 'clusterIcon',
-                iconSize: [40, 40]
+                iconSize: [45, 45]
             })
         }
     });
@@ -61,7 +62,10 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
         iconUrl: towerIconUrl,
         iconSize: [TOWER_WIDTH_PX, TOWER_WIDTH_PX * 4],
         iconAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 4],
-        tooltipAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 2]
+        tooltipAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 2],
+        shadowUrl: towerShadowUrl,
+        shadowSize: [TOWER_WIDTH_PX, TOWER_WIDTH_PX * 4],
+        shadowAnchor: [TOWER_WIDTH_PX / 2 - 2, TOWER_WIDTH_PX * 4 - 2]
     });
     const markers: Marker[] = []
     towers.forEach(t => {
