@@ -4,6 +4,7 @@ import "leaflet.markercluster";
 const LF = window['L'];
 const towerIconUrl = require("./assets/towerIcon.svg");
 const towerShadowUrl = require("./assets/towerShadow.svg");
+// const popupTemplate = require("./assets/towerPopup.html");
 const TOWER_WIDTH_PX = 24;
 
 window.onload = () => {
@@ -76,8 +77,13 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
             title: t.titolo,
             icon: icon
         })
-        marker.bindPopup(t.titolo);
+        marker.bindPopup(customPopup(t));
         markers.push(marker);
     });
     cluster.addLayers(markers);
+}
+
+function customPopup(tower: Tower) {
+    // return popupTemplate.replace('%TITOLO%', tower.titolo);
+    return tower.titolo;
 }
