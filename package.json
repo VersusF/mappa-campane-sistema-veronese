@@ -3,8 +3,8 @@
     "src/"
   ],
   "scripts": {
-    "start": "parcel serve src/index.html src/assets/",
-    "build": "cross-env NODE_ENV=production parcel build src/index.html src/assets/ --public-url ."
+    "start": "parcel serve src/index.html",
+    "build": "NODE_ENV=production parcel build src/index.html"
   },
   "name": "mappa-campane-sistema-veronese",
   "description": "Mappa dei campanili",
@@ -13,8 +13,7 @@
   "devDependencies": {
     "@types/leaflet": "^1.5.19",
     "@types/leaflet.markercluster": "^1.4.3",
-    "cross-env": "^5.2.1",
-    "parcel": "^2.0.0-nightly.476",
+    "parcel": "^1.12.4",
     "parcel-bundler": "^1.12.4",
     "sass": "^1.30.0",
     "typescript": "^2.9.2"

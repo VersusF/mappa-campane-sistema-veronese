@@ -2,9 +2,19 @@ import "leaflet";
 import { Marker, MarkerClusterGroup } from "leaflet";
 import "leaflet.markercluster";
 const LF = window['L'];
-const towerIconUrl = require("./assets/towerIcon.svg");
-const towerShadowUrl = require("./assets/towerShadow.svg");
-// const popupTemplate = require("./assets/towerPopup.html");
+const towerIconUrl: string = require("./assets/towerIcon.svg");
+const towerShadowUrl: string = require("./assets/towerShadow.svg");
+const popupTemplate: string = `
+<h3>%PAESE%</h3>
+<h5>%CHIESA%</h5>
+<ul>
+    <li><b>N° campane: </b>%NUMERO%</li>
+    <li><b>Peso: </b>%PESO% Kg</li>
+    <li><b>Nota: </b>%NOTA%</li>
+    <li><b>Suonabile: </b>%SUONABILE%</li>
+</ul>
+`.replace(/(\n|\t|\s\s\s\s)/g, "");
+
 const TOWER_WIDTH_PX = 24;
 
 window.onload = () => {
@@ -63,7 +73,7 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
         iconUrl: towerIconUrl,
         iconSize: [TOWER_WIDTH_PX, TOWER_WIDTH_PX * 4],
         iconAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 4],
-        tooltipAnchor: [TOWER_WIDTH_PX / 2, TOWER_WIDTH_PX * 2],
+        popupAnchor: [0, - TOWER_WIDTH_PX * 2],
         shadowUrl: towerShadowUrl,
         shadowSize: [TOWER_WIDTH_PX, TOWER_WIDTH_PX * 4],
         shadowAnchor: [TOWER_WIDTH_PX / 2 - 2, TOWER_WIDTH_PX * 4 - 2]
@@ -77,13 +87,21 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
             title: t.titolo,
             icon: icon
         })
-        marker.bindPopup(customPopup(t));
+        marker.bindPopup(customPopup(t), {
+            className: "tower-popup",
+            closeButton: false
+        });
         markers.push(marker);
     });
     cluster.addLayers(markers);
 }
 
 function customPopup(tower: Tower) {
-    // return popupTemplate.replace('%TITOLO%', tower.titolo);
-    return tower.titolo;
+    const titoloSplit = tower.titolo.split(/,/);
+    return popupTemplate.replace('%PAESE%', titoloSplit[0])
+        .replace('%CHIESA%', titoloSplit[1])
+        .replace('%NUMERO%', tower.numero.toString())
+        .replace('%NOTA%', tower.nota)
+        .replace('%SUONABILE%', tower.suonabile)
+        .replace('%PESO%', tower.peso.toString());
 }
