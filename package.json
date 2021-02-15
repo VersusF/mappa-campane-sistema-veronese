@@ -4,7 +4,7 @@
   ],
   "scripts": {
     "start": "parcel serve src/index.html",
-    "build": "NODE_ENV=production parcel build src/index.html"
+    "build": "cross-env NODE_ENV=production parcel build src/index.html src/assets/ --public-url ."
   },
   "name": "mappa-campane-sistema-veronese",
   "description": "Mappa dei campanili",

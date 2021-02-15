@@ -11,7 +11,7 @@ const popupTemplate: string = `
     <li><b>N° campane: </b>%NUMERO%</li>
     <li><b>Peso: </b>%PESO% Kg</li>
     <li><b>Nota: </b>%NOTA%</li>
-    <li><b>Suonabile: </b>%SUONABILE%</li>
+    <li><b>Condizione: </b>%SUONABILE%</li>
 </ul>
 `.replace(/(\n|\t|\s\s\s\s)/g, "");
 
@@ -52,7 +52,7 @@ function main() {
     });
 
     // Add data
-    const towers: Tower[] = require('./assets/torri.json');
+    const towers: Tower[] = require('./assets/torri.min.json');
     addTowers(cluster, towers);
     map.addLayer(cluster);
 }
@@ -62,10 +62,11 @@ interface Tower {
     lng: number,
     id: number,
     nota: string,
-    numero: number,
+    numero: string,
     peso: number | 'Sconosciuto',
-    suonabile: string,
-    titolo: string
+    condizione: string,
+    paese: string,
+    chiesa: string
 }
 
 function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
@@ -84,7 +85,7 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
             lat: t.lat,
             lng: t.lng
         }, {
-            title: t.titolo,
+            title: t.paese + ', ' + t.chiesa,
             icon: icon
         })
         marker.bindPopup(customPopup(t), {
@@ -97,11 +98,10 @@ function addTowers(cluster: MarkerClusterGroup, towers: Tower[]) {
 }
 
 function customPopup(tower: Tower) {
-    const titoloSplit = tower.titolo.split(/,/);
-    return popupTemplate.replace('%PAESE%', titoloSplit[0])
-        .replace('%CHIESA%', titoloSplit[1])
+    return popupTemplate.replace('%PAESE%', tower.paese)
+        .replace('%CHIESA%', tower.chiesa)
         .replace('%NUMERO%', tower.numero.toString())
         .replace('%NOTA%', tower.nota)
-        .replace('%SUONABILE%', tower.suonabile)
+        .replace('%SUONABILE%', tower.condizione)
         .replace('%PESO%', tower.peso.toString());
 }
